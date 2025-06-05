@@ -1,0 +1,20 @@
+Hello world.
+This is a short line.
+Another one.
+
+Tab\ttest here with a tab character.
+
+Line with no newline terminator at end of file
+Another paragraph starts here.
+Multiple sentences. On one line.
+
+Empty line follows:
+
+
+
+
+A line with special characters: !@#$%^&*()_+-=[]{}|;:'",.<>/?~
+
+One more line with \t tab and some trailing spaces.    
+
+And a final line without newline
