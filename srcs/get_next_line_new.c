@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/16 13:33:14 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/16 18:27:05 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static int	initialize_buffer(char **buf)
 {
 	size_t	size;
 
-	if (!buf)
+	if (!*buf)
 	{
 		size = BUFFER_SIZE;
 		*buf = malloc(sizeof(char) * (size + 1));
-		if (!buf)
+		if (!*buf)
 			return (0);
 	}
 	ft_memset(*buf, 0, size + 1);
@@ -38,22 +38,25 @@ static int	initialize_buffer(char **buf)
 static int	init_next_line(char **nl, t_state *stb)
 {
 	char	*tmp;
-	size_t	next_lin_old_size;
+	size_t	nxln_old_sz;
 
-	if (!nl)
-		if (!initialize_buffer(&nl))
+	if (!*nl)
+	{
+		stb->nxln_siz = initialize_buffer(nl);
+		if (!stb->nxln_siz)
 			return (0);
+	}
 	else
 	{
-		next_lin_old_size = stb->nxln_siz;
+		nxln_old_sz = stb->nxln_siz;
 		stb->nxln_siz += BUFFER_SIZE; 
 		tmp = malloc(sizeof(char) * (stb->nxln_siz + 1));
 		if (!tmp)
 			return (0);
-		ft_memset(tmp, 0, stb->next_lin_siz + 1);
-		ft_memcpy(tmp, stb->next_lin, next_lin_old_size);
-		free(stb->next_lin);
-		stb->next_lin = tmp;		
+		ft_memset(tmp, 0, stb->nxln_siz + 1);
+		ft_memcpy(tmp, *nl, nxln_old_sz);
+		free(*nl);
+		*nl = tmp;		
 	}
 	return (1);
 }
@@ -64,7 +67,7 @@ char	*get_next_line(int fd)
 	char			*next_line;
 
 	stb[fd] = (t_state){0};
-	stb[fd].nxln_siz = BUFFER_SIZE + 1
+	stb[fd].nxln_siz = BUFFER_SIZE + 1;
 	if (!init_next_line(&stb[fd]))
 		return (NULL);
 	while(!stb[fd].flag_eof)
