@@ -6,12 +6,57 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/07 09:05:44 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/16 13:33:14 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <limits.h>
+/**
+ * @brief 	Allocate memory for string buffer of BUFFER_SIZE and/or
+ * 			initialze buffer to 0 depending if its memory was allocate before.
+ * @param buf pointer to buffer memory.
+ * @returns	Size of allocated memory if succesfull
+ * 			0 if an error occured
+ */
+static int	initialize_buffer(char **buf)
+{
+	size_t	size;
+
+	if (!buf)
+	{
+		size = BUFFER_SIZE;
+		*buf = malloc(sizeof(char) * (size + 1));
+		if (!buf)
+			return (0);
+	}
+	ft_memset(*buf, 0, size + 1);
+	return (size);
+}
+
+
+static int	init_next_line(char **nl, t_state *stb)
+{
+	char	*tmp;
+	size_t	next_lin_old_size;
+
+	if (!nl)
+		if (!initialize_buffer(&nl))
+			return (0);
+	else
+	{
+		next_lin_old_size = stb->nxln_siz;
+		stb->nxln_siz += BUFFER_SIZE; 
+		tmp = malloc(sizeof(char) * (stb->nxln_siz + 1));
+		if (!tmp)
+			return (0);
+		ft_memset(tmp, 0, stb->next_lin_siz + 1);
+		ft_memcpy(tmp, stb->next_lin, next_lin_old_size);
+		free(stb->next_lin);
+		stb->next_lin = tmp;		
+	}
+	return (1);
+}
 
 char	*get_next_line(int fd)
 {
@@ -19,6 +64,7 @@ char	*get_next_line(int fd)
 	char			*next_line;
 
 	stb[fd] = (t_state){0};
+	stb[fd].nxln_siz = BUFFER_SIZE + 1
 	if (!init_next_line(&stb[fd]))
 		return (NULL);
 	while(!stb[fd].flag_eof)
@@ -30,7 +76,7 @@ char	*get_next_line(int fd)
 				read_from_buffer(&stb);
 				if (stb[fd].flag_eol)
 					stb[fd].flag_eol = 0;
-					return (&next_line);
+					return (next_line);
 			}
 			if (!read_from_file_descriptor(fd, &stb[fd]));
 				return (NULL);

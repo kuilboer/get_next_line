@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/04 22:26:23 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/15 20:27:30 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/16 13:33:11 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_state
 	int 	flag_eob;
 	int 	flag_eof;
 	size_t	buff_siz;
+	size_t	nxln_siz;
 	size_t	i_buf;
 	size_t	i_nxl;
 	char	buffer[BUFFER_SIZE + 1];
