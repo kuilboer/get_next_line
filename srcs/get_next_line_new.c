@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/16 18:27:05 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/16 20:33:24 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,48 @@ static int	initialize_buffer(char **buf)
 	return (size);
 }
 
-
-static int	init_next_line(char **nl, t_state *stb)
+/**
+ * @brief Initialize or grow allocated memory for string 'next_line'
+ * @param stb pointer to state table
+ * @param nl  pointer to string next_line
+ */
+static int	init_next_line(char **nxln, t_state *stb)
 {
 	char	*tmp;
 	size_t	nxln_old_sz;
 
-	if (!*nl)
+	if (!*nxln)
 	{
-		stb->nxln_siz = initialize_buffer(nl);
+		stb->nxln_siz = initialize_buffer(nxln);
 		if (!stb->nxln_siz)
 			return (0);
 	}
 	else
 	{
 		nxln_old_sz = stb->nxln_siz;
-		stb->nxln_siz += BUFFER_SIZE; 
+		stb->nxln_siz *= 2 ; 
 		tmp = malloc(sizeof(char) * (stb->nxln_siz + 1));
 		if (!tmp)
 			return (0);
 		ft_memset(tmp, 0, stb->nxln_siz + 1);
-		ft_memcpy(tmp, *nl, nxln_old_sz);
-		free(*nl);
-		*nl = tmp;		
+		ft_memcpy(tmp, *nxln, nxln_old_sz);
+		free(*nxln);
+		*nxln= tmp;		
 	}
+	return (1);
+}
+
+int	init_state_table(t_state *stb, char **next_line)
+{
+	next_line = NULL;
+	if (!stb->initialized)
+	{
+		*stb = (t_state){0};
+		stb->initialized = 1;
+		stb->nxln_siz = BUFFER_SIZE + 1;
+	}
+	if (!init_next_line(*next_line, stb))
+		return (0);
 	return (1);
 }
 
@@ -66,10 +84,7 @@ char	*get_next_line(int fd)
 	static t_state	stb[1024];
 	char			*next_line;
 
-	stb[fd] = (t_state){0};
-	stb[fd].nxln_siz = BUFFER_SIZE + 1;
-	if (!init_next_line(&stb[fd]))
-		return (NULL);
+	initialize_variables(&stb[fd], &next_line, &);
 	while(!stb[fd].flag_eof)
 	{
 		while (!stb[fd].flag_eob && )
@@ -89,6 +104,17 @@ char	*get_next_line(int fd)
 	}
 	return (NULL)
 }
+
+
+
+
+
+
+
+
+
+
+
 	while (!stb[fd].flag_eol)
 		process_read_buffer(&stb)
 
