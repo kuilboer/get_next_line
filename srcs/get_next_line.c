@@ -5,104 +5,78 @@
 /*                                                     +:+                    */
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/06/04 22:28:10 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/23 10:04:22 by okuilboe      ########   odam.nl         */
+/*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
+/*   Updated: 2025/06/23 22:13:42 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdlib.h>
+#include <limits.h>
 
-
-
-static void read_next_line_from_buffer(char **nxln, t_state *stb)
+static void	clean_up_after_error(char **nxln, t_state *stb)
 {
-	while (stb->buffer[stb->i_buf])
+	if (*nxln)
+		free(nxln);
+	stb->flag_err = 1;
+	nxln = NULL;
+}
+
+static int	read_buffer_from_file_descriptor(int fd, t_state *stb)
+{
+	int	result;
+
+	initialize_buffer(stb->buffer);
+	result = read(fd, stb->buffer, stb->buff_siz);
+	if (result == -1)
+		return (0);
+	else if (result == 0)
+		stb->flag_eof = 1;
+	else
+	{
+		stb->buffer[result] = '\0';
+		stb->flag_eob = 0;
+	}
+	return (1);
+}
+
+static void	read_next_line_from_buffer(char **nxln, t_state *stb)
+{
+	while (stb->buffer[stb->i_buf] && stb->i_nxl < stb->nxln_siz)
 	{
 		nxln[stb->i_nxl] = stb->buffer[stb->i_buf];
-		if (stb.buf_rest[stb.i_rst] == "\n")
+		if (stb->buffer[stb->i_buf] == "\n")
 		{
-			stb->next_lin[++stb->i_nxl] = '\0';
+			nxln[++stb->i_nxl] = '\0';
 			stb->flag_eol = 1;
 			stb->i_buf++;
-			stb->i_nxl = 0;
 			return ;
 		}
 		stb->i_buf++;
 		stb->i_nxl++;
 	}
-	stb->flag_eob = 1;
-	return;
+	if (!stb->buffer[stb->i_buf])
+		stb->flag_eob = 1;
+	if (!(stb->i_nxl < stb->nxln_siz))
+		stb->flag_eonl = 1;
+	return ;
 }
 
-static int	read_buffer_from_file_descriptor(int fd, t_state *stb)
-{
-	ft_memset(stb->buffer, 0, stb->buff_siz + 1);
-	stb->read_cnt = read(fd, stb->buffer, stb->buff_siz);
-	if (stb->read_cnt == -1)
-			return (0);
-		else if (stb->read_cnt == 0)
-			stb->flag_eof = 1;
-		else
-			stb->buffer[stb->read_cnt] = '\0';
-			stb->flag_eob = 0;
-	return(1);
-}
-
-/**
- * @brief	Read the next line from file or standard input.
- * @param fd File Descriptor.
- * @return 
- * 	- stb.next_lin a free()able handle to char string containing the nextline
- * 	  read including the \\n.
- * 
- *	- NULL if there is no more content to read or an error occured.
- */
 char	*get_next_line(int fd)
 {
-	static char buf_rest[BUFFER_SIZE + 1];
-	t_state stb;
+	static t_state	stb[1024];
+	char			*next_line;
 
-	stb = (t_state){0};
-	stb.buff_siz = BUFFER_SIZE;
-	if (!init_next_line(&stb))
-		return (NULL);
-	if (!read_buffer_from_file_descriptor(fd, &stb))
+	if (!initialize_variables(&stb[fd], &next_line))
+		clean_up_after_error(&next_line, &stb[fd]);
+	while (!(stb[fd].flag_eof && stb[fd].flag_err && stb[fd].flag_eol))
 	{
-		free(stb.next_lin);
-		return(NULL);
+		read_next_line_from_buffer(&next_line, &stb);
+		if (stb[fd].flag_eonl)
+			if (!init_next_line(next_line, &stb))
+				clean_up_after_error(&next_line, &stb[fd]);
+		if (stb->flag_eob)
+			if (!read_buffer_from_file_descriptor(fd, &stb[fd]))
+				clean_up_after_error(&next_line, &stb[fd]);
 	}
-	if (unprocessed_buffer())
-	while (stb.buffer[stb.i_buf])
-	{
-		while (buf_rest[stb.i_rst])
-		{
-			stb.next_lin[stb.i_nxl++] = buf_rest[stb.i_rst++];
-			if (stb.buf_rest[stb.i_rst] == "\n")
-			{
-				stb.flag_eol = 1;
-				break ;
-			}
-		ft_memset(buf_rest, 0, BUFFER_SIZE + 1);
-		while (stb.buffer[stb.i_buf])
-		{
-			stb.next_lin[stb.i_nxl++] = stb.buffer[stb.i_buf++];
-		}
-	}	
 	return (next_line);
 }
-
-
-/** 
-	 * 1. All helper functions go in the get_next_line_utils.c file.
-	 * 2. What is a file descriptor and how to use it;
-	 * 3. What are static variables and why are they significant for this assignment?
-	 *    https://en.wikipedia.org/wiki/Static_variable
-	 * 4. Read-up on -D BUFFER_SIZE Precompiler Macro;
-	 * 5. Readup on the read() funcion;
-	 * 6. Reading a file one line per call how to track reading state between consecutive calls?
-	 * 7. How to manage read buffer and have the line ready for return if and when a lin termination character is read.
-	 * 8. 
-	 * 
-	 */
