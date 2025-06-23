@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/23 22:51:44 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/23 23:18:10 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char	*get_next_line(int fd)
 	static t_state	stb[1024];
 	char			*next_line;
 
+	next_line = NULL;
 	if (!initialize_variables(&stb[fd], &next_line))
 		clean_up_after_error(&next_line, &stb[fd]);
 	while (!(stb[fd].flag_eof && stb[fd].flag_err && stb[fd].flag_eol))
