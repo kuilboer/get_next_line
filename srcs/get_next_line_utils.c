@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/16 19:40:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/23 23:05:06 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/23 23:28:03 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	init_next_line(char **nxln, t_state *stb)
 	char	*tmp;
 	size_t	nxln_old_sz;
 
-	if (!*nxln)
+	if (!nxln)
 	{
 		stb->nxln_siz = initialize_buffer(nxln);
 		if (!stb->nxln_siz)
