@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/16 19:40:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/23 22:55:51 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/23 23:05:06 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static int	initialize_buffer(char **buf)
 {
 	size_t	size;
 
+	size = BUFFER_SIZE;
 	if (!*buf)
 	{
-		size = BUFFER_SIZE;
 		*buf = malloc(sizeof(char) * (size + 1));
 		if (!*buf)
 			return (0);
