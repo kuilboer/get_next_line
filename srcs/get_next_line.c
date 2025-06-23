@@ -6,12 +6,14 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/23 22:13:42 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/23 22:51:44 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <limits.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 static void	clean_up_after_error(char **nxln, t_state *stb)
 {
@@ -25,7 +27,7 @@ static int	read_buffer_from_file_descriptor(int fd, t_state *stb)
 {
 	int	result;
 
-	initialize_buffer(stb->buffer);
+	ft_memset(stb->buffer, 0, stb->buff_siz + 1);
 	result = read(fd, stb->buffer, stb->buff_siz);
 	if (result == -1)
 		return (0);
@@ -43,10 +45,10 @@ static void	read_next_line_from_buffer(char **nxln, t_state *stb)
 {
 	while (stb->buffer[stb->i_buf] && stb->i_nxl < stb->nxln_siz)
 	{
-		nxln[stb->i_nxl] = stb->buffer[stb->i_buf];
-		if (stb->buffer[stb->i_buf] == "\n")
+		*nxln[stb->i_nxl] = stb->buffer[stb->i_buf];
+		if (stb->buffer[stb->i_buf] == '\n')
 		{
-			nxln[++stb->i_nxl] = '\0';
+			*nxln[++stb->i_nxl] = '\0';
 			stb->flag_eol = 1;
 			stb->i_buf++;
 			return ;
@@ -70,9 +72,9 @@ char	*get_next_line(int fd)
 		clean_up_after_error(&next_line, &stb[fd]);
 	while (!(stb[fd].flag_eof && stb[fd].flag_err && stb[fd].flag_eol))
 	{
-		read_next_line_from_buffer(&next_line, &stb);
+		read_next_line_from_buffer(&next_line, &stb[fd]);
 		if (stb[fd].flag_eonl)
-			if (!init_next_line(next_line, &stb))
+			if (!init_next_line(&next_line, &stb[fd]))
 				clean_up_after_error(&next_line, &stb[fd]);
 		if (stb->flag_eob)
 			if (!read_buffer_from_file_descriptor(fd, &stb[fd]))
