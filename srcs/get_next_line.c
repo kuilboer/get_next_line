@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 16:33:12 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 17:16:44 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 static void	clean_up_after_error(char **nxln, t_state *stb)
 {
 	if (*nxln)
-		free(nxln);
+		free(*nxln);
 	stb->flag_err = 1;
-	nxln = NULL;
+	*nxln = NULL;
 }
 
 static int	read_buffer_from_file_descriptor(int fd, t_state *stb)
@@ -83,7 +83,7 @@ char	*get_next_line(int fd)
 			if (!read_buffer_from_file_descriptor(fd, &stb[fd]))
 				clean_up_after_error(&next_line, &stb[fd]);
 	}
-	if (stb->flag_eof && !next_line[0])
+	if (stb[fd].flag_eof && !*next_line)
 		clean_up_after_error(&next_line, &stb[fd]);
 	return (next_line);
 }
