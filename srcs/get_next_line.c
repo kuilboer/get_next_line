@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 20:55:40 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 21:10:51 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ static int	read_buffer_from_file_descriptor(int fd, t_state *stb)
 	ft_memset(stb->buffer, 0, stb->buff_siz + 1);
 	result = read(fd, stb->buffer, stb->buff_siz);
 	if (result == -1)
+	{
+		ft_memset(stb->buffer, 0, stb->buff_siz + 1);
 		return (0);
+	}
 	else if (result == 0)
 	{
 		stb->flag_eof = 1;
