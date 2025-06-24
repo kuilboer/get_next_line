@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 21:10:51 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 22:35:15 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	read_buffer_from_file_descriptor(int fd, t_state *stb)
 	if (result == -1)
 	{
 		ft_memset(stb->buffer, 0, stb->buff_siz + 1);
+		stb->flag_err = 1;
 		return (0);
 	}
 	else if (result == 0)
@@ -74,7 +75,7 @@ char	*get_next_line(int fd)
 	static t_state	stb[MAX_INPUTS];
 	char			*next_line;
 
-	if (fd < 0 || fd >= MAX_INPUTS || read(fd, NULL, 0) == -1)
+	if (fd < 0 || fd >= MAX_INPUTS)
 		return (NULL);
 	if (!initialize_variables(&next_line, &stb[fd]))
 		clean_up_after_error(&next_line, &stb[fd]);
