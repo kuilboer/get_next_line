@@ -6,18 +6,21 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/04 22:26:23 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 01:14:49 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 17:31:03 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# define MAX_INPUTS 1024
+
 # include <stddef.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
+
 
 /**
  * @brief Represents the state used by get_next_line() for each file descriptor.

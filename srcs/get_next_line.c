@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 17:16:44 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 17:32:44 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,11 @@ static void	read_next_line_from_buffer(char **nxln, t_state *stb)
 
 char	*get_next_line(int fd)
 {
-	static t_state	stb[1024];
+	static t_state	stb[MAX_INPUTS];
 	char			*next_line;
 
+	if (fd > MAX_INPUTS)
+		return (NULL);
 	if (!initialize_variables(&next_line, &stb[fd]))
 		clean_up_after_error(&next_line, &stb[fd]);
 	while (!(stb[fd].flag_eof || stb[fd].flag_err || stb[fd].flag_eol))
