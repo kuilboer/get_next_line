@@ -1,0 +1,7 @@
+{
+	"makefile.configurations": [],
+	"makefile.makeDirectory": "tsts",
+	"files.associations": {
+		"*.org": "c"
+	}
+}

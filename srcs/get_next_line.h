@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/04 22:26:23 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/23 22:50:26 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 01:14:49 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_state
 }	t_state;
 
 char	*get_next_line(int fd);
-int		initialize_variables(t_state *stb, char **next_line);
+int		initialize_variables(char **next_line, t_state *stb);
 int		init_next_line(char **nxln, t_state *stb);
 void	*ft_memset(void *s, int c, size_t n);
 

@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/16 19:40:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 00:10:07 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 16:48:29 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	init_next_line(char **nxln, t_state *stb)
 		stb->nxln_siz = initialize_buffer(nxln);
 		if (!stb->nxln_siz)
 			return (0);
+		//ft_memcpy(*nxln, stb->buffer, stb->nxln_siz);
 	}
 	else
 	{
@@ -90,6 +91,7 @@ int	init_next_line(char **nxln, t_state *stb)
 		ft_memcpy(tmp, *nxln, nxln_old_sz);
 		free(*nxln);
 		*nxln = tmp;
+		stb->flag_eonl = 0;
 	}
 	return (1);
 }
@@ -122,17 +124,18 @@ void	*ft_memset(void *s, int c, size_t n)
  * @param	next_line write buffer to store the next line read from 'buffer'
  * @returns	1 for success, 	0 for failure.
  */
-int	initialize_variables(t_state *stb, char **next_line)
+int	initialize_variables(char **next_line, t_state *stb)
 {
-	next_line = NULL;
+	*next_line = NULL;
 	if (!stb->initialized)
 	{
 		*stb = (t_state){0};
+		stb->buff_siz = BUFFER_SIZE;
 		stb->initialized = 1;
 	}
 	if (!init_next_line(next_line, stb))
 		return (0);
-	stb->nxln_siz = BUFFER_SIZE;
 	stb->i_nxl = 0;
+	stb->flag_eol = 0;
 	return (1);
 }
