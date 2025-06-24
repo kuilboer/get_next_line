@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 22:35:15 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 22:57:45 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*get_next_line(int fd)
 	static t_state	stb[MAX_INPUTS];
 	char			*next_line;
 
-	if (fd < 0 || fd >= MAX_INPUTS)
+	if (fd < 0 || fd >= MAX_INPUTS || BUFFER_SIZE < 1)
 		return (NULL);
 	if (!initialize_variables(&next_line, &stb[fd]))
 		clean_up_after_error(&next_line, &stb[fd]);

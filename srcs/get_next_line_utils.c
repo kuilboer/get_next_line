@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/16 19:40:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 21:29:19 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 22:40:41 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,6 @@ int	initialize_variables(char **next_line, t_state *stb)
 		return (0);
 	stb->i_nxl = 0;
 	stb->flag_eol = 0;
+	stb->flag_err = 0;
 	return (1);
 }
