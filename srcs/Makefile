@@ -6,7 +6,7 @@
 #    By: okuilboe <okuilboe@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2025/06/04 23:00:59 by okuilboe      #+#    #+#                  #
-#    Updated: 2025/06/23 22:10:43 by okuilboe      ########   odam.nl          #
+#    Updated: 2025/06/24 21:20:35 by okuilboe      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = get_next_line.a
 
 CC			:= cc
 CFLAGS		:= -g -Wall -Wextra -Werror
-CPPFLAGS	:= -D BUFFER_SIZE=42
+CPPFLAGS	:= #-D BUFFER_SIZE=42
 LDFLAGS		:=
 
 # ==== FILES =====

@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/04 22:26:23 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 17:31:03 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 21:29:41 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
 # include <stddef.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 10
 # endif
-
 
 /**
  * @brief Represents the state used by get_next_line() for each file descriptor.

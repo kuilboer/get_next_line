@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/16 19:40:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 16:48:29 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/24 21:29:19 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	init_next_line(char **nxln, t_state *stb)
 		stb->nxln_siz = initialize_buffer(nxln);
 		if (!stb->nxln_siz)
 			return (0);
-		//ft_memcpy(*nxln, stb->buffer, stb->nxln_siz);
 	}
 	else
 	{
