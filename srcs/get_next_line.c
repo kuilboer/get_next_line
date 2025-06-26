@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/26 11:55:00 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/26 22:10:06 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	clean_up_after_error(char **nxln, t_state *stb)
 	if (*nxln)
 		free(*nxln);
 	stb->flag_err = 1;
+	ft_memset(stb->buffer, 0, stb->buff_siz + 1);
 	*nxln = NULL;
 }
 
@@ -68,6 +69,7 @@ static void	read_next_line_from_buffer(char **nxln, t_state *stb)
 		stb->flag_eob = 1;
 	if (stb->i_nxl >= stb->nxln_siz)
 		stb->flag_eonl = 1;
+	(*nxln)[stb->i_nxl] = '\0';
 	return ;
 }
 
@@ -90,7 +92,7 @@ char	*get_next_line(int fd)
 			if (!read_buffer_from_file_descriptor(fd, &stb[fd]))
 				clean_up_after_error(&next_line, &stb[fd]);
 	}
-	if (stb[fd].flag_eof && !*next_line)
+	if (stb[fd].flag_eof && stb[fd].i_nxl == 0)
 		clean_up_after_error(&next_line, &stb[fd]);
 	return (next_line);
 }

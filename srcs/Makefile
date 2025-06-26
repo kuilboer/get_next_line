@@ -6,7 +6,7 @@
 #    By: okuilboe <okuilboe@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2025/06/04 23:00:59 by okuilboe      #+#    #+#                  #
-#    Updated: 2025/06/26 17:06:32 by okuilboe      ########   odam.nl          #
+#    Updated: 2025/06/26 22:25:05 by okuilboe      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ TSTS :=							\
 	tsts/read_error_test.c		\
 	tsts/get_next_line_debug.c	\
 	tsts/test_multiple_fd.c		\
+	tsts/test_1char.c			\
 
 
 	
