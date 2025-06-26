@@ -6,13 +6,14 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 22:57:45 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/26 11:55:00 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <limits.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 static void	clean_up_after_error(char **nxln, t_state *stb)

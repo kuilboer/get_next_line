@@ -6,11 +6,12 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/16 19:40:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/24 22:40:41 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/26 14:15:53 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /**
@@ -126,7 +127,7 @@ void	*ft_memset(void *s, int c, size_t n)
 int	initialize_variables(char **next_line, t_state *stb)
 {
 	*next_line = NULL;
-	if (!stb->initialized)
+	if (!stb->initialized || stb->flag_eof || stb->flag_err)
 	{
 		*stb = (t_state){0};
 		stb->buff_siz = BUFFER_SIZE;
