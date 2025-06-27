@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/27 21:46:42 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/26 22:10:06 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	read_buffer_from_file_descriptor(int fd, t_state *stb)
 
 static void	read_next_line_from_buffer(char **nxln, t_state *stb)
 {
-	while (stb->i_buf < stb->buff_siz && stb->buffer[stb->i_buf] && stb->i_nxl < stb->nxln_siz)
+	while (stb->buffer[stb->i_buf] && stb->i_nxl < stb->nxln_siz)
 	{
 		(*nxln)[stb->i_nxl] = stb->buffer[stb->i_buf];
 		if (stb->buffer[stb->i_buf] == '\n')
@@ -93,9 +93,6 @@ char	*get_next_line(int fd)
 				clean_up_after_error(&next_line, &stb[fd]);
 	}
 	if (stb[fd].flag_eof && stb[fd].i_nxl == 0)
-	{
-		fprintf(stderr, "DEBUG: EOF reached with i_nxl = %zu\n", stb[fd].i_nxl);
 		clean_up_after_error(&next_line, &stb[fd]);
-	}
 	return (next_line);
 }
