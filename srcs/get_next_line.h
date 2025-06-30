@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/04 22:26:23 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/27 16:47:26 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/30 20:33:26 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ typedef struct s_state
 	size_t	nxln_siz;		/**< Allocation size of the 'next_line' buffer.	*/
 	size_t	i_buf;			/**< Read index for 'buffer'.					*/
 	size_t	i_nxl;			/**< Write index for 'next_line'.				*/
-	char	buffer[BUFFER_SIZE + 1];	/**< Read buffer.					*/
+	char	*buffer;		/**< Read buffer.								*/
 }	t_state;
 
 char	*get_next_line(int fd);
 int		initialize_variables(char **next_line, t_state *stb);
 int		init_next_line(char **nxln, t_state *stb);
 void	*ft_memset(void *s, int c, size_t n);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/16 19:40:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/27 21:06:56 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/30 20:33:35 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  * @returns a pointer to dest if operation was successfull.
  * 			NULL if wrong input was detected.
  */
-static void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t			i;
 	unsigned char	*d_buf;
@@ -43,31 +43,10 @@ static void	*ft_memcpy(void *dest, const void *src, size_t n)
 }
 
 /**
- * @brief 	Allocate memory for string buffer of BUFFER_SIZE and/or
- * 			initialze buffer to 0 depending if its memory was allocate before.
- * @param buf pointer to buffer memory.
- * @returns	Size of allocated memory if succesfull
- * 			0 if an error occured
- */
-// static int	initialize_buffer(char **buf)
-// {
-// 	size_t	size;
-
-// 	size = 2;
-// 	if (!*buf)
-// 	{
-// 		*buf = malloc(sizeof(char) * (size + 1));
-// 		if (!*buf)
-// 			return (0);
-// 	}
-// 	ft_memset(*buf, 0, size + 1);
-// 	return (size);
-// }
-
-/**
  * @brief Initialize or grow allocated memory for string 'next_line'
- * @param stb pointer to state table
- * @param nl  pointer to string next_line
+ * @param stb pointer to state table.
+ * @param nl  pointer to string next_line.
+ * @returns 1 for success 0 for failure.
  */
 int	init_next_line(char **nxln, t_state *stb)
 {
@@ -101,8 +80,8 @@ int	init_next_line(char **nxln, t_state *stb)
 }
 
 /**
- * @brief ft_memset() fills the first 'n' bytes of the memory area 
- * pointed to by 's' with the constant byte 'c'.
+ * @brief Overwrite the first 'n' bytes of the memory area pointed to by 's'
+ * with the constant byte 'c'.
  * @param	s pointer to memory area to initialize.
  * @param	c character byte code to write to 's'.
  * @param	n maxiimum number of bytes to write.
@@ -124,20 +103,25 @@ void	*ft_memset(void *s, int c, size_t n)
 
 /**
  * @brief 	Initialize or reset variables to 0.
- * @param	stb static statetable that persists state between function calls.
+ * @param	stb static state table that persists state between function calls.
  * @param	next_line write buffer to store the next line read from 'buffer'
  * @returns	1 for success, 	0 for failure.
  */
 int	initialize_variables(char **next_line, t_state *stb)
 {
 	*next_line = NULL;
-	if (!stb->initialized || stb->flag_eof || stb->flag_err)
+	if (!stb->initialized || stb->flag_err)
 	{
 		*stb = (t_state){0};
 		stb->buff_siz = BUFFER_SIZE;
+		if (!stb->buffer)
+			stb->buffer = malloc(stb->buff_siz + 1);
+		if (!stb->buffer)
+			return (0);
+		ft_memset(stb->buffer, 0, stb->buff_siz + 1);
 		stb->initialized = 1;
 	}
-	stb->nxln_siz = 1;
+	stb->nxln_siz = 3;
 	if (!init_next_line(next_line, stb))
 		return (0);
 	stb->i_nxl = 0;

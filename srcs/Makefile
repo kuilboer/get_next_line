@@ -6,7 +6,7 @@
 #    By: okuilboe <okuilboe@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2025/06/04 23:00:59 by okuilboe      #+#    #+#                  #
-#    Updated: 2025/06/27 16:19:01 by okuilboe      ########   odam.nl          #
+#    Updated: 2025/06/30 19:48:07 by okuilboe      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,14 +64,11 @@ all: $(NAME)
 
 bonus:
 	@echo "(re-)Creating bonus files." 
-	@rm -f *_bonus
+	@rm -f *_bonus*
 	@cp get_next_line.c get_next_line_bonus.c
 	@cp get_next_line.h get_next_line_bonus.h
 	@cp get_next_line_utils.c get_next_line_utils_bonus.c
 	@sed -i 's/^#ifndef GET_NEXT_LINE_H/#ifndef GET_NEXT_LINE_BONUS_H/; s/^# define GET_NEXT_LINE_H/# define GET_NEXT_LINE_BONUS_H/' get_next_line_bonus.h
-
-
-
 
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
@@ -88,6 +85,8 @@ fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(TSTS_LNK_TGT)
 	@rm -f $(TSTS_NAME)
+	@rm -f *_bonus*
+	@rm -f *.txt
 
 re: fclean all
 
