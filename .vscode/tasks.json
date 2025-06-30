@@ -7,10 +7,10 @@
 		"command": "bash",
 		"args": [
 		"-c",
-		"if [ -f gnltest ]; then make re; else make all; fi"
+		"if [ -f gnl_debug ]; then make retest; else make test_debug; fi"
 		],
 		"options": {
-		"cwd": "${workspaceFolder}/tsts"
+		"cwd": "${workspaceFolder}/srcs"
 		},
 		"group": {
 		"kind": "build",

@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/25 15:17:45 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/26 22:23:46 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/30 10:18:30 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "test_utils.h"
-#include "../get_next_line.h"
+#include "get_next_line.h"
 
 // // Your get_next_line() function
 // char *get_next_line(int fd);
