@@ -6,7 +6,7 @@
 /*   By: okuilboe <okuilboe@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/06/06 14:48:51 by okuilboe      #+#    #+#                 */
-/*   Updated: 2025/06/30 21:10:46 by okuilboe      ########   odam.nl         */
+/*   Updated: 2025/06/30 22:38:42 by okuilboe      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,8 @@ static void	read_next_line_from_buffer(char **nxln, t_state *stb)
 			(*nxln)[++stb->i_nxl] = '\0';
 			stb->flag_eol = 1;
 			stb->i_buf++;
-			if (!trim_next_line(nxln, stb))
-
-			return ;
+			if (trim_next_line(nxln, stb))
+				return ;
 		}
 		stb->i_buf++;
 		stb->i_nxl++;
